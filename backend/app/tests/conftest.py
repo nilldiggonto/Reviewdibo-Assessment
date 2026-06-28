@@ -7,17 +7,12 @@ from app.core.database import get_db
 from app.main import app
 from app.models import Base
 
-if settings.database_url.startswith("sqlite"):
-    TEST_DATABASE_URL = "sqlite+aiosqlite://"
-    _connect_args = {"check_same_thread": False}
-else:
-    TEST_DATABASE_URL = settings.database_url.replace("/reviewdibo", "/reviewdibo_test")
-    _connect_args = {}
+TEST_DATABASE_URL = settings.database_url.replace("/reviewdibo", "/reviewdibo_test")
 
 
 @pytest_asyncio.fixture
 async def db_session():
-    engine = create_async_engine(TEST_DATABASE_URL, echo=False, connect_args=_connect_args)
+    engine = create_async_engine(TEST_DATABASE_URL, echo=False)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
