@@ -152,8 +152,11 @@ uv sync
 # Tables are auto-created on first run, but you can seed sample data:
 uv run python -m app.seed
 
-# Start the backend server
-uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+# Start the backend server (development with auto-reload)
+uv run fastapi dev --port 8000
+
+# Or production mode
+uv run fastapi run --port 8000
 ```
 
 The API will be available at `http://localhost:8000`.  
